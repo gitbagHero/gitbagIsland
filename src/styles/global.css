@@ -419,6 +419,27 @@ code {
   line-height: 1.65;
 }
 
+[data-theme="dark"] .intro-panel {
+  border-color: #9a835a;
+  background:
+    radial-gradient(circle, rgba(154, 131, 90, 0.24) 1.5px, transparent 1.5px) 0 0 / 28px 28px,
+    radial-gradient(circle, rgba(255, 226, 166, 0.1) 1px, transparent 1px) 7px 7px / 14px 14px,
+    #302518;
+}
+
+[data-theme="dark"] .tag-panel {
+  border-color: #f7cd67;
+  background:
+    radial-gradient(circle, rgba(247, 205, 103, 0.2) 1.5px, transparent 1.5px) 0 0 / 28px 28px,
+    radial-gradient(circle, rgba(255, 238, 160, 0.1) 1px, transparent 1px) 7px 7px / 14px 14px,
+    #3c2d18;
+}
+
+[data-theme="dark"] .tag-panel .tag-stats a {
+  border-color: rgba(247, 205, 103, 0.45);
+  background: rgba(43, 33, 24, 0.72);
+}
+
 .post-list {
   display: flex;
   flex-direction: column;
@@ -620,8 +641,11 @@ code {
   gap: 24px;
   align-items: center;
   min-height: 360px;
+  border: 0;
+  background: transparent;
   grid-column: 1 / -1;
   cursor: default !important;
+  padding: clamp(8px, 2vw, 18px) 0;
 }
 
 .hero-copy h1 {
