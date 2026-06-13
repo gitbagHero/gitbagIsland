@@ -1,0 +1,97 @@
+---
+import BlogLayout from "../layouts/BlogLayout.astro";
+import { formatDate, getPosts, getTagStats } from "../lib/blog";
+
+const posts = await getPosts();
+const tagStats = getTagStats(posts);
+---
+
+<BlogLayout pageKind="home">
+  <section class="home-grid">
+    <section class="animal-card pattern-app-teal hero-panel">
+      <div class="hero-copy">
+        <div class="animal-title title-app-green title-large">
+          <span class="ribbon-back left"></span>
+          <span class="ribbon-back right"></span>
+          <span class="ribbon-fold left"></span>
+          <span class="ribbon-fold right"></span>
+          <span class="ribbon-front"></span>
+          <span class="ribbon-text">欢迎登岛</span>
+        </div>
+        <h1>这里是 gitbagIsland</h1>
+        <p>
+          一个全静态个人博客：文章以 Markdown 存放，构建时生成静态页面，左侧是岛屿目录，右侧是阅读小屋。
+        </p>
+        <div class="hero-actions">
+          {posts[0] && <a class="island-button primary" href={`/posts/${posts[0].id}/`}>阅读最新文章</a>}
+          <a class="island-button" href="#tags">查看标签</a>
+        </div>
+      </div>
+      <div class="island-visual" aria-hidden="true">
+        <span class="sun"></span>
+        <span class="cloud cloud-a"></span>
+        <span class="cloud cloud-b"></span>
+        <span class="hill hill-a"></span>
+        <span class="hill hill-b"></span>
+        <span class="house"></span>
+      </div>
+    </section>
+
+    <section class="animal-card pattern-default notice-panel">
+      <div class="mini-title">写作规则</div>
+      <ul class="check-list">
+        <li>Markdown 文件放在 <code>src/content/posts</code>。</li>
+        <li>每篇文章 frontmatter 包含标题、摘要、日期和标签。</li>
+        <li>标签统计会在构建时自动计算。</li>
+      </ul>
+    </section>
+
+    <section class="latest-section">
+      <div class="section-heading">
+        <div class="animal-title title-app-pink">
+          <span class="ribbon-back left"></span>
+          <span class="ribbon-back right"></span>
+          <span class="ribbon-fold left"></span>
+          <span class="ribbon-fold right"></span>
+          <span class="ribbon-front"></span>
+          <span class="ribbon-text">最近文章</span>
+        </div>
+      </div>
+      <div class="latest-list">
+        {posts.slice(0, 4).map((post) => (
+          <a class="latest-card" href={`/posts/${post.id}/`}>
+            <span>{formatDate(post.data.pubDate)}</span>
+            <strong>{post.data.title}</strong>
+            <p>{post.data.summary}</p>
+            <div>
+              {post.data.tags.map((tag) => (
+                <em>#{tag}</em>
+              ))}
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="tag-cloud-section" id="tags">
+      <div class="section-heading">
+        <div class="animal-title title-app-yellow">
+          <span class="ribbon-back left"></span>
+          <span class="ribbon-back right"></span>
+          <span class="ribbon-fold left"></span>
+          <span class="ribbon-fold right"></span>
+          <span class="ribbon-front"></span>
+          <span class="ribbon-text">标签统计</span>
+        </div>
+      </div>
+      <div class="tag-cloud">
+        {tagStats.map(({ tag, count }) => (
+          <a id={`tag-${tag}`} href={`/#tag-${encodeURIComponent(tag)}`}>
+            <span>#{tag}</span>
+            <strong>{count} 篇</strong>
+          </a>
+        ))}
+      </div>
+    </section>
+  </section>
+</BlogLayout>

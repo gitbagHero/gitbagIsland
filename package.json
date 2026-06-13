@@ -1,0 +1,29 @@
+{
+  "name": "gitbag-island",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=22.12.0",
+    "pnpm": ">=10.0.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/compiler-rs": "^0.1.0",
+    "@astrojs/react": "^5.0.0",
+    "@tailwindcss/vite": "^4.0.0",
+    "animal-island-ui": "^0.9.5",
+    "astro": "^6.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwindcss": "^4.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.0"
+  }
+}

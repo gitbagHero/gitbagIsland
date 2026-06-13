@@ -1,0 +1,95 @@
+---
+import ThemeToggle from "../components/ThemeToggle";
+import { formatDate, getPosts, getTagStats } from "../lib/blog";
+import BaseLayout from "./BaseLayout.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  currentId?: string;
+  pageKind?: "home" | "post";
+  readerTitle?: string;
+}
+
+const {
+  title = "gitbagIsland",
+  description = "一个动森风格的个人博客岛。",
+  currentId,
+  pageKind = "home",
+  readerTitle,
+} = Astro.props;
+
+const posts = await getPosts();
+const tagStats = getTagStats(posts);
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="site-shell" data-page-kind={pageKind}>
+    <aside class="island-sidebar" aria-label="文章与标签导航">
+      <div class="sidebar-header">
+        <a class="brand" href="/" aria-label="返回首页">
+          <span class="brand-mark">GI</span>
+          <span>
+            <strong>gitbagIsland</strong>
+            <small>personal blog</small>
+          </span>
+        </a>
+        <ThemeToggle client:only="react" />
+      </div>
+
+      <section class="animal-card pattern-default sidebar-panel intro-panel">
+        <div class="mini-title">岛屿广播</div>
+        <p>默认首页会展示博客说明和最近文章；点击左侧任意文章后，右侧阅读区会切换到对应 Markdown 内容。</p>
+      </section>
+
+      <nav class="post-list" aria-label="文章列表">
+        <div class="section-label">文章列表</div>
+        {posts.map((post) => (
+          <a
+            class:list={[
+              "post-card",
+              currentId === post.id && "is-active",
+            ]}
+            href={`/posts/${post.id}/`}
+          >
+            <span class="post-card-date">{formatDate(post.data.pubDate)}</span>
+            <strong>{post.data.title}</strong>
+            <span>{post.data.summary}</span>
+            <span class="post-card-tags">
+              {post.data.tags.slice(0, 3).map((tag) => (
+                <em>#{tag}</em>
+              ))}
+            </span>
+          </a>
+        ))}
+      </nav>
+
+      <section class="animal-card pattern-app-yellow sidebar-panel tag-panel">
+        <div class="section-label">标签统计</div>
+        <div class="tag-stats">
+          {tagStats.map(({ tag, count }) => (
+            <a href={`/#tag-${encodeURIComponent(tag)}`} title={`${tag}: ${count} 篇`}>
+              <span>#{tag}</span>
+              <strong>{count}</strong>
+            </a>
+          ))}
+        </div>
+      </section>
+    </aside>
+
+    <main class="reader-area" id="content">
+      <div class="reader-toolbar">
+        <div class:list={["animal-title", pageKind === "home" ? "title-app-teal" : "title-app-yellow"]}>
+          <span class="ribbon-back left"></span>
+          <span class="ribbon-back right"></span>
+          <span class="ribbon-fold left"></span>
+          <span class="ribbon-fold right"></span>
+          <span class="ribbon-front"></span>
+          <span class="ribbon-text">{readerTitle ?? (pageKind === "home" ? "岛屿首页" : "文章")}</span>
+        </div>
+        <a class="island-button" href="/">首页</a>
+      </div>
+      <slot />
+    </main>
+  </div>
+</BaseLayout>
