@@ -412,10 +412,6 @@ code {
   --rt: #fff;
 }
 
-.sidebar-panel {
-  cursor: default !important;
-}
-
 .intro-panel p {
   margin: 8px 0 0;
   color: var(--text-body);
@@ -443,6 +439,14 @@ code {
   transition: transform var(--d-base) var(--ease), border-color var(--d-base), background var(--d-base);
 }
 
+[data-theme="dark"] .post-card {
+  border-color: #9a835a;
+  background:
+    radial-gradient(circle, rgba(154, 131, 90, 0.24) 1.5px, transparent 1.5px) 0 0 / 28px 28px,
+    radial-gradient(circle, rgba(255, 226, 166, 0.1) 1px, transparent 1px) 7px 7px / 14px 14px,
+    #302518;
+}
+
 .post-card:hover,
 .post-card.is-active {
   border-color: var(--primary);
@@ -450,6 +454,15 @@ code {
     radial-gradient(circle, rgba(25, 200, 185, 0.24) 1.5px, transparent 1.5px) 0 0 / 28px 28px,
     #e6f9f6;
   transform: translateY(-2px);
+}
+
+[data-theme="dark"] .post-card:hover,
+[data-theme="dark"] .post-card.is-active {
+  border-color: #f7cd67;
+  background:
+    radial-gradient(circle, rgba(247, 205, 103, 0.22) 1.5px, transparent 1.5px) 0 0 / 28px 28px,
+    radial-gradient(circle, rgba(255, 238, 160, 0.12) 1px, transparent 1px) 7px 7px / 14px 14px,
+    #3c2d18;
 }
 
 .post-card-date {
@@ -544,7 +557,11 @@ code {
 }
 
 .reader-toolbar .animal-title {
-  max-width: min(100%, 760px);
+  max-width: min(100%, 900px);
+}
+
+.reader-toolbar .animal-title.title-large {
+  font-size: clamp(30px, 4.4vw, 44px);
 }
 
 .reader-toolbar .ribbon-text {
@@ -833,10 +850,10 @@ code {
 
 .article-layout {
   display: grid;
-  grid-template-columns: minmax(0, 780px) minmax(180px, 240px);
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 340px);
   align-items: start;
-  justify-content: start;
-  gap: clamp(20px, 4vw, 42px);
+  justify-content: stretch;
+  gap: clamp(20px, 3vw, 34px);
   width: 100%;
 }
 
@@ -941,6 +958,9 @@ code {
 .article-outline {
   position: sticky;
   top: 22px;
+  width: 100%;
+  max-width: 340px;
+  margin-left: auto;
   border: 1.5px solid #82d5bb;
   border-radius: var(--r-lg);
   background:

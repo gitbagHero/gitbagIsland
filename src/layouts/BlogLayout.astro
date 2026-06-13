@@ -37,10 +37,10 @@ const tagStats = getTagStats(posts);
         <ThemeToggle client:only="react" />
       </div>
 
-      <section class="animal-card pattern-default sidebar-panel intro-panel">
+      <a class="animal-card pattern-default sidebar-panel intro-panel" href="/" aria-label="返回博客首页">
         <div class="mini-title">岛屿广播</div>
         <p>默认首页会展示博客说明和最近文章；点击左侧任意文章后，右侧阅读区会切换到对应 Markdown 内容。</p>
-      </section>
+      </a>
 
       <nav class="post-list" aria-label="文章列表">
         <div class="section-label">文章列表</div>
@@ -78,17 +78,19 @@ const tagStats = getTagStats(posts);
     </aside>
 
     <main class="reader-area" id="content">
-      <div class="reader-toolbar">
-        <div class:list={["animal-title", pageKind === "home" ? "title-app-teal" : "title-app-yellow"]}>
-          <span class="ribbon-back left"></span>
-          <span class="ribbon-back right"></span>
-          <span class="ribbon-fold left"></span>
-          <span class="ribbon-fold right"></span>
-          <span class="ribbon-front"></span>
-          <span class="ribbon-text">{readerTitle ?? (pageKind === "home" ? "岛屿首页" : "文章")}</span>
+      {pageKind !== "home" && (
+        <div class="reader-toolbar">
+          <div class:list={["animal-title", "title-large", "title-app-yellow"]}>
+            <span class="ribbon-back left"></span>
+            <span class="ribbon-back right"></span>
+            <span class="ribbon-fold left"></span>
+            <span class="ribbon-fold right"></span>
+            <span class="ribbon-front"></span>
+            <span class="ribbon-text">{readerTitle ?? "文章"}</span>
+          </div>
+          <a class="island-button" href="/">首页</a>
         </div>
-        <a class="island-button" href="/">首页</a>
-      </div>
+      )}
       <slot />
     </main>
   </div>
