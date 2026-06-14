@@ -40,6 +40,16 @@ Preview the build:
 pnpm preview
 ```
 
+Deploy to Cloudflare Pages:
+
+```bash
+pnpm deploy
+```
+
+The deploy command builds the static site and publishes `dist/` to the
+Cloudflare Pages project `gitbaghero`. Run `pnpm exec wrangler login` first if
+this machine is not already authenticated with Cloudflare.
+
 ## Writing Posts
 
 Blog posts live in `src/content/posts` as Markdown files. The filename becomes the static route:
@@ -80,4 +90,4 @@ public/
 
 - Navigation uses Astro's `<ClientRouter />` for client-side page transitions.
 - The theme toggle is client-only to avoid SSR/localStorage hydration mismatches.
-- The site is deployable as a static `dist/` output after `pnpm build`.
+- The site is deployed to Cloudflare Pages from the static `dist/` output.
